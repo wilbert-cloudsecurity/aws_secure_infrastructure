@@ -8,3 +8,19 @@ variable "name" {
   type        = string
 }
 
+variable "public_subnet_cidr" {
+  type = string
+}
+
+variable "private_dev_subnet_cidr" {
+  type = string
+}
+
+variable "private_prod_subnet_cidr" {
+  type = string
+}
+
+variable "az" {
+  description = "Availability zone"
+  type        = string
+}

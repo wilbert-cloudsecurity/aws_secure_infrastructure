@@ -7,3 +7,34 @@ resource "aws_vpc" "this" {
     Name = var.name
   }
 }
+
+resource "aws_subnet" "public" {
+  vpc_id                  = aws_vpc.this.id
+  cidr_block              = var.public_subnet_cidr
+  availability_zone       = var.az
+  map_public_ip_on_launch = true
+
+  tags = {
+    Name = "public-subnet"
+  }
+}
+
+resource "aws_subnet" "private_dev" {
+  vpc_id            = aws_vpc.this.id
+  cidr_block        = var.private_dev_subnet_cidr
+  availability_zone = var.az
+
+  tags = {
+    Name = "private-dev-subnet"
+  }
+}
+
+resource "aws_subnet" "private_prod" {
+  vpc_id            = aws_vpc.this.id
+  cidr_block        = var.private_prod_subnet_cidr
+  availability_zone = var.az
+
+  tags = {
+    Name = "private-prod-subnet"
+  }
+}
