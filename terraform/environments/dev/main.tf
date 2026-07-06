@@ -10,3 +10,22 @@ module "vpc" {
 
   az = "us-east-1a"
 }
+
+module "bastion" {
+  source = "../../modules/bastion"
+
+  ami_id           = "ami-02b2c1b57c5105166"
+  instance_type    = "t3.micro"
+  public_subnet_id = module.vpc.public_subnet_id
+  key_name         = "aws-cli.pem"
+  security_group_id = module.security_groups.bastion_sg_id
+}
+
+module "security_groups" {
+  source = "../../modules/security-groups"
+
+  vpc_id = module.vpc.vpc_id
+
+  my_ip = "168.182.93.132/32"
+}
+
