@@ -17,7 +17,7 @@ module "bastion" {
   ami_id           = "ami-02b2c1b57c5105166"
   instance_type    = "t3.micro"
   public_subnet_id = module.vpc.public_subnet_id
-  key_name         = "aws-cli.pem"
+  key_name         = "bastion.host"
   security_group_id = module.security_groups.bastion_sg_id
 }
 
@@ -29,3 +29,13 @@ module "security_groups" {
   my_ip = "168.182.93.132/32"
 }
 
+module "ec2" {
+  source = "../../modules/ec2"
+
+  ami_id            = "ami-02b2c1b57c5105166"
+  instance_type     = "t3.micro"
+  private_subnet_id = module.vpc.private_dev_subnet_id
+  key_name          = "dev.server"
+
+  security_group_id = module.security_groups.private_instance_sg_id
+}
