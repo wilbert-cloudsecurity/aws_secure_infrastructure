@@ -39,3 +39,7 @@ module "ec2" {
 
   security_group_id = module.security_groups.private_instance_sg_id
 }
+ 
+module "monitoring" {
+  source = "../../modules/monitoring"
+}

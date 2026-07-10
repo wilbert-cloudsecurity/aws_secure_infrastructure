@@ -1,1 +1,7 @@
-# Outputs will be added in future stages
+output "bastion_public_ip" {
+  value       = module.bastion.bastion_public_ip
+}
+
+output "private_instance_private_ip" {
+  value       = module.ec2.private_instance_ip
+}
