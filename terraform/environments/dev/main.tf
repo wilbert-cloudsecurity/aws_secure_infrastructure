@@ -43,3 +43,9 @@ module "ec2" {
 module "monitoring" {
   source = "../../modules/monitoring"
 }
+ 
+module "flow_logs" {
+  source = "../../modules/flow-logs"
+
+  vpc_id = module.vpc.vpc_id
+}
