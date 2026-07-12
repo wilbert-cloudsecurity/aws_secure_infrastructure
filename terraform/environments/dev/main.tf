@@ -40,12 +40,14 @@ module "ec2" {
   security_group_id = module.security_groups.private_instance_sg_id
 }
  
-module "monitoring" {
-  source = "../../modules/monitoring"
-}
- 
 module "flow_logs" {
   source = "../../modules/flow-logs"
 
   vpc_id = module.vpc.vpc_id
+}
+
+module "monitoring" {
+  source = "../../modules/monitoring"
+
+  instance_id = module.ec2.instance_id
 }
