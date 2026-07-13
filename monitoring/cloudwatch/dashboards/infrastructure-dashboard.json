@@ -1,0 +1,15 @@
+{
+  "widgets": [
+    {
+      "type": "metric",
+      "properties": {
+        "metrics": [
+          ["AWS/EC2", "CPUUtilization"]
+        ],
+        "period": 300,
+        "stat": "Average",
+        "title": "EC2 CPU Usage"
+      }
+    }
+  ]
+}

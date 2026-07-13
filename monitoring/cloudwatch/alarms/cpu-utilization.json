@@ -1,0 +1,6 @@
+{
+  "AlarmName": "high-cpu-utilization",
+  "MetricName": "CPUUtilization",
+  "Namespace": "AWS/EC2",
+  "Threshold": 70
+}
