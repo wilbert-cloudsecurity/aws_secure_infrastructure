@@ -1,0 +1,21 @@
+name: Pull Request Checks
+
+on:
+  pull_request:
+
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: terraform/environments/dev
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+
+      - run: terraform init
+
+      - run: terraform validate

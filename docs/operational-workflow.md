@@ -1,11 +1,16 @@
 # Operational Workflow: From Deployment to Resolution
 
-This document defines the operational lifecycle of our infrastructure, ensuring that every stage—from deployment to troubleshooting—is standardized.
+This document defines the operational lifecycle of our infrastructure, ensuring that every stage—from code change to troubleshooting—is standardized.
 
-## 1. Infrastructure Deployment
-All infrastructure changes are performed using **Terraform**.
-* **Process:** Code must be peer-reviewed, validated via `terraform plan`, and applied only after confirming there are no circular dependencies or insecure configurations.
-* **State:** We maintain the state in a remote backend (S3 + DynamoDB) to ensure consistency.
+## 1. Infrastructure Deployment & CI/CD
+Our deployment process follows a robust CI/CD pipeline to ensure quality and security:
+
+* **Code Change:** Infrastructure modifications are initiated via feature branches in our version control system.
+* **Git Commit:** Changes are committed and pushed, triggering the automation pipeline.
+* **GitHub Actions Validation:** Automated workflows execute `terraform fmt` and `tflint` to ensure code quality and style compliance.
+* **Terraform Validation:** The pipeline performs `terraform validate` to check for syntax and configuration integrity, followed by a `terraform plan` to preview changes.
+* **Deployment Readiness:** Once the plan is verified and peer-reviewed, the pipeline marks the deployment as ready to be applied to the target environment.
+* **State Management:** The final state is stored in a remote S3 backend with DynamoDB locking for consistency.
 
 ## 2. Monitoring
 Visibility begins immediately after deployment.
@@ -25,4 +30,4 @@ Upon receiving an alert, we initiate the data collection phase.
 ## 5. Troubleshooting
 The final phase to restore normal operations.
 * **Action:** Execution of the procedures defined in `docs/troubleshooting.md`.
-* **Closure:** Once resolved, we document the Root Cause (RCA) and apply necessary code (Terraform) changes to prevent recurrence.
+* **Closure:** Once resolved, we document the Root Cause (RCA) and apply necessary code changes to prevent recurrence.
