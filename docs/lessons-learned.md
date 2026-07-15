@@ -6,3 +6,5 @@ Monitoring without alerting creates visibility, but not operational awareness.
 Effective observability requires both metrics and actionable alerts.
 Infrastructure automation reduces configuration mistakes and improves deployment consistency.
 Validation pipelines help catch errors before infrastructure changes are applied.
+Infrastructure automation without security validation can still introduce risky configurations.
+Security scanning helps identify potential misconfigurations before deployment.
