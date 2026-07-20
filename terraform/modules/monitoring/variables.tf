@@ -1,3 +1,3 @@
-variable "instance_id" {
+variable "dev_instance_id" {
   type = string
 }

@@ -8,7 +8,7 @@ resource "aws_cloudwatch_dashboard" "main_dashboard" {
 
         properties = {
           metrics = [
-            ["AWS/EC2", "CPUUtilization", "InstanceId", var.instance_id]
+            ["AWS/EC2", "CPUUtilization", "dev_InstanceId", var.dev_instance_id]
           ]
 
           period = 300

@@ -1,24 +1,22 @@
 # Environment Overview
 
-This document provides a high-level architectural summary of our AWS infrastructure, designed for scalability, security, and observability.
+This document defines the purpose and architectural role of each environment in our AWS infrastructure.
 
-## 1. VPC & Subnet Design
-The infrastructure is contained within a dedicated Virtual Private Cloud (VPC), segmented into:
-* **Public Subnets:** Host the Bastion Host and NAT components (if required), serving as the single point of entry.
-* **Private Subnets:** Host application instances and databases. These subnets have no route to the Internet Gateway, ensuring complete isolation from public inbound traffic.
+## Environment Definitions
 
-## 2. Access Management (Bastion & Private EC2)
-* **Bastion Host:** A hardened, minimal-footprint EC2 instance in the public subnet that acts as a secure jump box.
-* **Private EC2:** Application servers reside in private subnets. They are reachable only via SSH tunneling through the Bastion Host, preventing direct exposure to the public internet.
+### Dev
+* **Purpose:** Development and testing.
+* **Role:** Provides a sandbox for experimenting with infrastructure changes, testing application deployments, and validating CI/CD pipeline triggers. Resources here are transient and optimized for cost.
 
-## 3. Monitoring & Observability
-We prioritize visibility through an integrated monitoring stack:
-* **CloudWatch Agent:** Installed on all EC2 instances to stream system logs and metrics to CloudWatch.
-* **VPC Flow Logs:** Enabled to capture network traffic metadata, allowing us to audit connections and troubleshoot connectivity issues (specifically `REJECT` actions).
-* **Dashboards:** Centralized CloudWatch Dashboards provide real-time health metrics.
+### Prod
+* **Purpose:** Production workload simulation.
+* **Role:** Mirrors the production environment configuration as closely as possible. It is used for final validation before any changes are promoted to the live application, ensuring stability, security compliance, and performance consistency.
 
-## 4. CI/CD Pipeline
-Our deployment lifecycle is fully automated:
-* **Version Control:** All infrastructure is managed as code (IaC) via Terraform.
-* **Automation:** GitHub Actions serves as our CI/CD engine, handling linting, security scanning (`tfsec`/`checkov`), and the deployment process (`plan` and `apply`).
-* **Validation:** Every change undergoes automated validation and peer review before being applied to the production state, ensuring that our infrastructure matches our documented architecture.
+### Bastion
+* **Purpose:** Controlled administrative access.
+* **Role:** Acts as the secure "jump box" for the entire VPC. It resides in the public subnet and is the only authorized entry point for administrative tasks. All access to the Dev and Prod instances—regardless of their environment—must originate from this host via SSH tunneling to maintain a strict security perimeter.
+
+## Network & Access Strategy
+* **Isolation:** Both Dev and Prod instances are deployed in private subnets, ensuring they have no direct exposure to the public internet.
+* **Controlled Access:** The Bastion host is the only resource with an Internet Gateway route, forcing all administrative traffic through a single, audited, and hardened point of entry.
+* **Consistency:** While Dev and Prod serve different purposes, they follow identical security hardening patterns to ensure that code tested in Dev behaves predictably when simulated in the Prod environment.

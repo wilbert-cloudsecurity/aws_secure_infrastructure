@@ -34,8 +34,10 @@ module "ec2" {
 
   ami_id            = "ami-02b2c1b57c5105166"
   instance_type     = "t3.micro"
-  private_subnet_id = module.vpc.private_dev_subnet_id
-  key_name          = "dev.server"
+  dev_subnet_id     = module.vpc.private_dev_subnet_id
+  prod_subnet_id    = module.vpc.private_prod_subnet_id
+  key_name_dev      = "dev.server"
+  key_name_prod     = "prod.server"
 
   security_group_id = module.security_groups.private_instance_sg_id
 }
@@ -49,5 +51,5 @@ module "flow_logs" {
 module "monitoring" {
   source = "../../modules/monitoring"
 
-  instance_id = module.ec2.instance_id
+  dev_instance_id = module.ec2.dev_instance_id
 }

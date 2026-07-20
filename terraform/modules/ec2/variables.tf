@@ -9,12 +9,12 @@ variable "instance_type" {
   default     = "t3.micro"
 }
 
-variable "private_subnet_id" {
+variable "dev_subnet_id" {
   type        = string
-  description = "The ID of the private subnet where the EC2 instance will be deployed"
+  description = "The ID of the private dev subnet where the EC2 instance will be deployed"
 }
 
-variable "key_name" {
+variable "key_name_dev" {
   type        = string
   description = "The name of the SSH Key Pair to inject into the instance"
 }
@@ -22,4 +22,14 @@ variable "key_name" {
 variable "security_group_id" {
   type        = string
   description = "The ID of the Security Group to associate with the EC2 instance"
+}
+
+variable "prod_subnet_id" {
+  type        = string
+  description = "The ID of the private prod subnet where the EC2 instance will be deployed"
+}
+
+variable "key_name_prod" {
+  type        = string
+  description = "The name of the SSH Key Pair to inject into the instance"
 }
