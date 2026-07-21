@@ -51,5 +51,6 @@ module "flow_logs" {
 module "monitoring" {
   source = "../../modules/monitoring"
 
-  dev_instance_id = module.ec2.dev_instance_id
+  dev_instance_id  = module.ec2.dev_instance_id
+  prod_instance_id = module.ec2.prod_instance_id
 }

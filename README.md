@@ -51,3 +51,12 @@ Fully automated workflow using **GitHub Actions**:
 * Transition to **Attribute-Based Access Control (ABAC)** for IAM.
 * Integration of **AWS WAF** for application-level security.
 * Enhanced alerting using **Amazon SNS** for immediate incident notification.
+
+## Current Architecture
+
+- Bastion Host
+- Private Development Instance
+- Private Production Instance
+- CloudWatch Monitoring
+- VPC Flow Logs
+- GitHub Actions Validation
