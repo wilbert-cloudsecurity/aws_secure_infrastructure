@@ -6,3 +6,6 @@ output "private_instance_sg_id" {
   value = aws_security_group.private_instance_sg.id
 }
 
+output "endpoint_sg_id" {
+  value = aws_security_group.endpoint_sg.id
+}

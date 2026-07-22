@@ -22,11 +22,11 @@ module "bastion" {
 }
 
 module "security_groups" {
-  source = "../../modules/security-groups"
-
-  vpc_id = module.vpc.vpc_id
-
-  my_ip = "168.182.93.132/32"
+  source           = "../../modules/security-groups"
+  vpc_id           = module.vpc.vpc_id
+  dev_subnet_cidr  = "10.0.2.0/24"
+  prod_subnet_cidr = "10.0.3.0/24"
+  my_ip            = "168.182.93.132/32"
 }
 
 module "ec2" {
@@ -53,4 +53,14 @@ module "monitoring" {
 
   dev_instance_id  = module.ec2.dev_instance_id
   prod_instance_id = module.ec2.prod_instance_id
+}
+
+module "vpc_endpoints" {
+
+  source = "../../modules/vpc-endpoint"
+  vpc_id            = module.vpc.vpc_id
+  az                = "us-east-1a"
+  dev_subnet_id     = module.vpc.private_dev_subnet_id
+  prod_subnet_id    = module.vpc.private_prod_subnet_id
+  endpoint_sg_id    = module.security_groups.endpoint_sg_id
 }
